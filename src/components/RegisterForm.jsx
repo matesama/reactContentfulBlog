@@ -6,7 +6,9 @@ const RegisterForm = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-   const getData = async () => {
+   
+    const getData = async (event) => {
+        event.preventDefault();
         try {
             const requestData = {
                 method: 'POST',
@@ -26,21 +28,19 @@ const RegisterForm = () => {
         }
     }
 
-    useEffect(() => {
-       getData()
-    }, []);
+    
 
     return(
         <div>
-            <form className="form" action='/login' method="post">
+            <form className="form" onSubmit={getData}>
                 <label htmlFor="name">Name:</label>
-                <input id="name" name="name" onChange={()=>{setName}} required/>
+                <input id="name" name="name" onChange={(e)=>{setName(e.target.value)}} required/>
                 <br />
                 <label htmlFor="email">Email:</label>
-                <input id="email" name="email" onChange={()=>{setEmail}} required/>
+                <input id="email" name="email" onChange={(e)=>{setEmail(e.target.value)}} required/>
                 <br />
                 <label htmlFor="password">Password:</label>
-                <input id="password" name="password" onChange={()=>{setPassword}} required/>
+                <input id="password" name="password" onChange={(e)=>{setPassword(e.target.value)}} required/>
                 <br />
                 <input type="submit" id="submit" value="Register" />
             </form>
