@@ -32,17 +32,25 @@ const RegisterForm = () => {
 
     return(
         <div>
-            <form className="form" onSubmit={getData}>
-                <label htmlFor="name">Name:</label>
+            <form className="article-container" onSubmit={getData}>
+                <h2>Register</h2>
+                <div>
+                <label htmlFor="name">Name</label>
+                <br />
                 <input id="name" name="name" onChange={(e)=>{setName(e.target.value)}} required/>
                 <br />
-                <label htmlFor="email">Email:</label>
+                <label htmlFor="email">Email</label>
+                <br />
                 <input id="email" name="email" onChange={(e)=>{setEmail(e.target.value)}} required/>
                 <br />
-                <label htmlFor="password">Password:</label>
+                <label htmlFor="password">Password</label>
+                <br />
                 <input type="password" id="password" name="password" onChange={(e)=>{setPassword(e.target.value)}} required/>
                 <br />
                 <input type="submit" id="submit" value="Register" />
+                <br />
+                <input type="button" id="loginButton" value="Login" onClick={()=> navigate('/login')} className="secondaryBtn" />
+                </div>
             </form>
         </div>
     )

@@ -8,8 +8,8 @@ import Header from "./components/Header";
 import Location from "./components/Location"
 import RegisterForm from './components/registerForm';
 import LoginForm from './components/loginForm';
-
 import {Route, Routes} from "react-router-dom"
+import ProtectedRoute from './ProtectedRoute';
 
 function App() {
 
@@ -20,10 +20,11 @@ function App() {
       <Top />
       <div className='cards-container'>
         <Routes>
-          <Route path="/" element={<Header />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/login" element={<LoginForm />} />
+          <Route path="/" element={<Header />} />
           <Route path="/article/:id" element={<Location />} />
+        
         </Routes>    
       </div>
       </div>
