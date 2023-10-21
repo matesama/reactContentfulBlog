@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 
 const RegisterForm = () => {
@@ -6,6 +7,7 @@ const RegisterForm = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
    
     const getData = async (event) => {
         event.preventDefault();
@@ -20,9 +22,7 @@ const RegisterForm = () => {
             console.log(data);
 
             if(!data) throw new Error(`Fetching Data failed, due to:`)
-
-            setUserData(data)
-
+            navigate('/login');
         } catch(error) {
             console.log(error.message)
         }
@@ -40,7 +40,7 @@ const RegisterForm = () => {
                 <input id="email" name="email" onChange={(e)=>{setEmail(e.target.value)}} required/>
                 <br />
                 <label htmlFor="password">Password:</label>
-                <input id="password" name="password" onChange={(e)=>{setPassword(e.target.value)}} required/>
+                <input type="password" id="password" name="password" onChange={(e)=>{setPassword(e.target.value)}} required/>
                 <br />
                 <input type="submit" id="submit" value="Register" />
             </form>
