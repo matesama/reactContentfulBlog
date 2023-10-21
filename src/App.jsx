@@ -6,6 +6,7 @@ import Top from "./components/Top";
 // import Nav from "./components/Nav";
 import Header from "./components/Header";
 import Location from "./components/Location"
+import RegisterForm from './components/registerForm';
 
 import {Route, Routes} from "react-router-dom"
 
@@ -19,6 +20,7 @@ function App() {
       <div className='cards-container'>
         <Routes>
           <Route path="/" element={<Header />} />
+          <Route path="/register" element={<RegisterForm />} />
           <Route path="/article/:id" element={<Location />} />
         </Routes>    
       </div>

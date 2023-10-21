@@ -2,13 +2,14 @@
 import {client} from "../client"
 import {useState, useEffect} from "react";
 import {Link} from "react-router-dom"
+import axios from 'axios';
 
 
 const Header = () => {
-    const [headerContent, setHeaderContent] = useState([]);
-    
+    //const [headerContent, setHeaderContent] = useState([]);
+    const [userData, setUserData] = useState([])
 
-    const cleanUpData = (rawData) => {
+    /*const cleanUpData = (rawData) => {
         const cleanData = rawData.map((data) => {
             const {sys, fields} = data;
             const {id} = sys;
@@ -37,27 +38,41 @@ const Header = () => {
 
     useEffect(() => {
         getHeaderContent()
-    }, [])
+    }, [])*/
+/*proxy in the package of json. With URL of my local server to test the app. Port is the on the server*/
+   const getData = async () => {
+        try {
+            const getResponse =  await axios.get('http://localhost:3000/api/blogs');
+            
+            if(!getResponse) throw new Error(`Fetching Data failed, due to:`)
 
-    
+            setUserData(getResponse.data)
+        } catch(error) {
+            console.log(error.message)
+        }
+    }
+
+    useEffect(() => {
+       getData()
+    }, []);
     
     return(
         <>
     
-            {(Object.keys(headerContent).length) > 0 ?
-                headerContent.map((article) =>{
+          {(Object.keys(userData).length) > 0 ?
+                userData.map((article) =>{
                     return (
-                        <Link key={article.id} to={`article/${article.id}`}>
-                        <div key={article.id} className="article-container">
-                          <h2>{article.dataTitle}</h2>
-                          <img src={article.dataImg} className="article-image" alt={article.dataTitle} />
+                        <Link key={article._id} to={`article/${article._id}`}>
+                        <div key={article._id} className="article-container">
+                          <h2>{article.title}</h2>
+                          <img src={article.img.url} className="article-image" alt={article.img.description} />
                           
                         </div>
                         </Link>
                       )
                     })
                     : null
-            }  
+            } 
         
         </>
     )
