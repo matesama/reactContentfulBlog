@@ -7,6 +7,7 @@ import Top from "./components/Top";
 import Header from "./components/Header";
 import Location from "./components/Location"
 import RegisterForm from './components/registerForm';
+import LoginForm from './components/loginForm';
 
 import {Route, Routes} from "react-router-dom"
 
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Header />} />
           <Route path="/register" element={<RegisterForm />} />
+          <Route path="/login" element={<LoginForm />} />
           <Route path="/article/:id" element={<Location />} />
         </Routes>    
       </div>
