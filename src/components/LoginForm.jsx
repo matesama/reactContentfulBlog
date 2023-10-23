@@ -1,15 +1,20 @@
 import {useState} from 'react';
 import {useNavigate, Outlet} from 'react-router-dom';
 import ProtectedRoutes from '../ProtectedRoute';
+import Loader from './Loader';
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const [loader, setLoader] = useState(false);
+    const [errors, setErrors] = useState({})
 
     const getData = async (event) => {
-        event.preventDefault();
+        
         try {
+            event.preventDefault();
+            setLoader(!loader);
             const requestData = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -17,23 +22,28 @@ const LoginForm = () => {
             };
             const getResponse =  await fetch('http://localhost:3000/api/login', requestData);
             const data = await getResponse.json();
+            
             console.log(data);
             const token = data.token;
             if(!token) {
-                alert("Credentials Invalid");
-                throw new Error(`credentials invalid`);
+                setErrors(data);
+               //throw new Error("Credentials Invalid")
                 
             }
-
             sessionStorage.setItem('token', token)
-            navigate('login');    
+            
+            if(token){
+                navigate('/');
+              }   
         } catch(error) {
             console.log(error.message)
-            alert('Credentials invalid')
-        }
+        } finally {
+            setLoader(false)
+          }
     }
     return(
         <div>
+            { loader ? (<Loader />) : 
             <form className="article-container" onSubmit={getData}>
                 <h2>Login</h2>
                 <div>
@@ -49,7 +59,8 @@ const LoginForm = () => {
                 <br />
                 <input type='button' id='button' value='Register' onClick={() => navigate('/register')} className='secondaryBtn' />
                 </div>
-            </form>
+            </form> }
+            <div>{Object.keys(errors).length > 0 ? <p>{errors.error}</p> : null}</div>
         </div>
     )
 }

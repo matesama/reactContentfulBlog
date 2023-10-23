@@ -1,37 +1,61 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-
+import Loader from './Loader';
 
 const RegisterForm = () => {
-    const [userData, setUserData] = useState([]); 
+    const navigate = useNavigate();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate();
-   
+    const [loader, setLoader] = useState(false)
+    const [errors, setErrors] = useState({});
+    
     const getData = async (event) => {
         event.preventDefault();
         try {
+            setLoader(!loader)
+    
+              
+
             const requestData = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: name, email: email, password: password })
             };
+                // custom email regex
+              const regex = /^[a-z0-9][a-z0-9-_\.]+@([a-z]|[a-z0-9]?[a-z0-9-]+[a-z0-9])\.[a-z0-9]{2,10}(?:\.[a-z]{2,10})?$/;
+              if (!regex.test(email)) {
+                console.log(regex.test(email))
+                return setErrors({error: 'Please insert a valid email format'});
+              }
+            
+           
             const getResponse =  await fetch('http://localhost:3000/api/register', requestData);
             const data = await getResponse.json();
             console.log(data);
+            setErrors(data);
+            
+            
 
-            if(!data) throw new Error(`Fetching Data failed, due to:`)
+            if(!data) throw new Error(`Fetching Data failed, due to:${data.status}`)
+
+          if(!errors){
             navigate('/login');
+          }
+    
         } catch(error) {
             console.log(error.message)
+        } finally {
+          setLoader(false)
         }
     }
-
+        
+         
     
 
     return(
         <div>
+            { loader ? (<Loader />) : 
             <form className="article-container" onSubmit={getData}>
                 <h2>Register</h2>
                 <div>
@@ -51,7 +75,9 @@ const RegisterForm = () => {
                 <br />
                 <input type="button" id="loginButton" value="Login" onClick={()=> navigate('/login')} className="secondaryBtn" />
                 </div>
-            </form>
+            </form> }
+            <div className='errorMessage'>{Object.keys(errors).length > 0 ? <p>{errors.error}</p> : null}</div>
+          
         </div>
     )
 }

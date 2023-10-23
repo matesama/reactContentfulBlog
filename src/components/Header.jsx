@@ -3,11 +3,13 @@ import {client} from "../client"
 import {useState, useEffect} from "react";
 import {Link} from "react-router-dom"
 import axios from 'axios';
+import Loader from "./Loader";
 
 
 const Header = () => {
     //const [headerContent, setHeaderContent] = useState([]);
     const [userData, setUserData] = useState([])
+    const [loader, setLoader] = useState(true);
 
     /*const cleanUpData = (rawData) => {
         const cleanData = rawData.map((data) => {
@@ -42,14 +44,18 @@ const Header = () => {
 /*proxy in the package of json. With URL of my local server to test the app. Port is the on the server*/
    const getData = async () => {
         try {
+            setLoader(!loader);
             const getResponse =  await axios.get('http://localhost:3000/api/blogs');
             
             if(!getResponse) throw new Error(`Fetching Data failed, due to:`)
 
             setUserData(getResponse.data)
         } catch(error) {
+            setLoader(!loader);
             console.log(error.message)
-        }
+        } finally {
+            setLoader(false)
+          }
     }
 
     useEffect(() => {
@@ -59,6 +65,7 @@ const Header = () => {
     return(
         <>
     
+          { loader ? (<Loader />) : null }
           {(Object.keys(userData).length) > 0 ?
                 userData.map((article) =>{
                     return (

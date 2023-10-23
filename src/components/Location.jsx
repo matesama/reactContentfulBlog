@@ -2,11 +2,13 @@ import {client} from "../client";
 import {useParams} from "react-router-dom"
 import {useState, useEffect} from "react";
 import axios from "axios";
+import Loader from "./Loader";
 
 const Location = () => {
     const [article, setArticle] = useState({});
     const {id} = useParams();
     const [userData, setUserData] = useState([]);
+    const [loader, setLoader] = useState(true);
     
 
     /*const getData = async () => {
@@ -29,6 +31,7 @@ const Location = () => {
     }, [id])*/
     const getData = async () => {
         try {
+            setLoader(!loader);
             const getResponse =  await axios.get(`http://localhost:3000/api/blogs/${id}`);
             console.log(getResponse);
 
@@ -38,8 +41,10 @@ const Location = () => {
 
         } catch(error) {
             console.log(error.message)
-        }
-    }
+        } finally {
+            setLoader(false)
+          }
+    } 
 
     useEffect(() => {
        getData()
@@ -49,6 +54,7 @@ const Location = () => {
 
     return (
         <>
+        { loader ? (<Loader />) : 
         <div className="location-container">
             {(Object.keys(userData).length) > 0 ?        
             <div key={userData._id}>
@@ -65,7 +71,7 @@ const Location = () => {
 
             </div>
                 : null}
-        </div>        
+        </div> }        
         </>                
     )
 }
