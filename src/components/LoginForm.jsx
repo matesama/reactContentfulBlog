@@ -1,6 +1,5 @@
 import {useState} from 'react';
 import {useNavigate, Outlet} from 'react-router-dom';
-import ProtectedRoutes from '../ProtectedRoute';
 import Loader from './Loader';
 
 const LoginForm = () => {
