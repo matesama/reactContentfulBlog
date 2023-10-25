@@ -15,15 +15,11 @@ const Nav = () => {
         <div className="navigation">
             <nav>
                 {isAuthenticated ?
-                <>
-                <NavLink className="link" to="/">Home</NavLink>
+                 <div className="link-container">
                 <button className="link" onClick={logout}>Logout</button>
-                </>
+                </div>
                 :
-                <>
-                <NavLink className="link" to="/login">Login</NavLink>
-                <NavLink className="link" to="/register">Register</NavLink>
-                </>
+                null
                 }
             </nav>
 

@@ -164,6 +164,16 @@ a:hover {
         100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
     }
 
+    
+    .link-container button {
+      border: solid 2px #535bf2;
+      background-color: #484747;
+      padding: 5px;
+      color: #f4f4f6;
+      font-size: large;
+      
+    }
+
 
 /* -------------------------------- */
 

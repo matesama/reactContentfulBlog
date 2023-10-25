@@ -20,8 +20,8 @@ function App() {
     <div className="background">
       <div className='content-layer'>
       <Top />
+      <Nav />
       <div className='cards-container'>
-        <Nav />
         <Routes>
           <Route path="/" element={<PrivateRoute />}>
             <Route index element={<Header />} />
