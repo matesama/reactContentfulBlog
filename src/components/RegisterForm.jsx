@@ -10,6 +10,10 @@ const RegisterForm = () => {
     const [loader, setLoader] = useState(false)
     const [errors, setErrors] = useState({});
     
+    const clearErrors = () => {
+      setErrors({});
+    }
+
     const getData = async (event) => {
         event.preventDefault();
         try {
@@ -26,7 +30,9 @@ const RegisterForm = () => {
               const regex = /^[a-z0-9][a-z0-9-_\.]+@([a-z]|[a-z0-9]?[a-z0-9-]+[a-z0-9])\.[a-z0-9]{2,10}(?:\.[a-z]{2,10})?$/;
               if (!regex.test(email)) {
                 console.log(regex.test(email))
-                return setErrors({error: 'Please insert a valid email format'});
+                setErrors({error: 'Please insert a valid email format'});
+                setTimeout(clearErrors, 2000);
+                return;
               }
             
            

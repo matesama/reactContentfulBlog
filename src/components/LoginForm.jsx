@@ -1,6 +1,5 @@
 import {useState} from 'react';
 import {useNavigate, Outlet} from 'react-router-dom';
-import ProtectedRoutes from '../ProtectedRoute';
 import Loader from './Loader';
 
 const LoginForm = () => {
@@ -9,6 +8,10 @@ const LoginForm = () => {
     const navigate = useNavigate();
     const [loader, setLoader] = useState(false);
     const [errors, setErrors] = useState({})
+
+    const clearErrors = () => {
+        setErrors({});
+    }
 
     const getData = async (event) => {
         
@@ -27,6 +30,7 @@ const LoginForm = () => {
             const token = data.token;
             if(!token) {
                 setErrors(data);
+                setTimeout(clearErrors, 2000);
                //throw new Error("Credentials Invalid")
                 
             }
