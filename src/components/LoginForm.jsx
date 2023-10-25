@@ -10,6 +10,10 @@ const LoginForm = () => {
     const [loader, setLoader] = useState(false);
     const [errors, setErrors] = useState({})
 
+    const clearErrors = () => {
+        setErrors({});
+    }
+
     const getData = async (event) => {
         
         try {
@@ -27,6 +31,7 @@ const LoginForm = () => {
             const token = data.token;
             if(!token) {
                 setErrors(data);
+                setTimeout(clearErrors, 2000);
                //throw new Error("Credentials Invalid")
                 
             }
