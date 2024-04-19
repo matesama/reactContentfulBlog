@@ -7,7 +7,7 @@ import Nav from "./components/Nav";
 import Header from "./components/Header";
 import Location from "./components/Location"
 import RegisterForm from './components/RegisterForm';
-import LoginForm from './components/loginForm';
+import LoginForm from './components/LoginForm';
 import {Route, Routes, Navigate} from "react-router-dom"
 import PrivateRoute from './routes/PrivateRoute';
 import PublicRoute from './routes/PublicRoute';
