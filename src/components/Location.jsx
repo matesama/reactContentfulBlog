@@ -1,13 +1,17 @@
 import {client} from "../client";
 import {useParams} from "react-router-dom"
 import {useState, useEffect} from "react";
+import axios from "axios";
+import Loader from "./Loader";
 
 const Location = () => {
     const [article, setArticle] = useState({});
     const {id} = useParams();
+    const [userData, setUserData] = useState([]);
+    const [loader, setLoader] = useState(true);
     
 
-    const getData = async () => {
+    /*const getData = async () => {
         try{
             const response= await client.getEntry(id);
             console.log(id);
@@ -24,20 +28,42 @@ const Location = () => {
 
     useEffect(() => {
         getData()
-    }, [id])
+    }, [id])*/
+    const getData = async () => {
+        try {
+            setLoader(!loader);
+            const getResponse =  await axios.get(`https://travel-blog-server-steel.vercel.app/api/blogs/${id}`);
+            console.log(getResponse);
+
+            if(!getResponse) throw new Error(`Fetching Data failed, due to:`)
+
+            setUserData(getResponse.data)
+
+        } catch(error) {
+            console.log(error.message)
+        } finally {
+            setLoader(false)
+          }
+    } 
+
+    useEffect(() => {
+       getData()
+    }, [id]);
+    
 
 
     return (
         <>
+        { loader ? (<Loader />) : 
         <div className="location-container">
-            {(Object.keys(article).length) > 0 ?        
-            <div key={id}>
-                <h2>{article.title}</h2>
-                <img src={article.img.fields.file.url} className="item-image" alt={article.title} />
-                <p>{article.description.content[0].content[0].value}</p>
-                {article.list.content.map((item, index) => {
+            {(Object.keys(userData).length) > 0 ?        
+            <div key={userData._id}>
+                <h2>{userData.title}</h2>
+                <img src={userData.img.url} className="item-image" alt={userData.img.description} />
+                <p>{userData.description}</p>
+                {userData.list.map((item, index) => {
                     return(
-                        <p key={index}>{item.content[0].value}</p>
+                        <p key={index}>{item}</p>
                     )
                  }
 
@@ -45,7 +71,7 @@ const Location = () => {
 
             </div>
                 : null}
-        </div>        
+        </div> }        
         </>                
     )
 }
