@@ -6,8 +6,8 @@ import Top from "./components/Top";
 import Nav from "./components/Nav";
 import Header from "./components/Header";
 import Location from "./components/Location"
-import RegisterForm from './components/registerForm';
-import LoginForm from './components/loginForm';
+import RegisterForm from './components/RegisterForm';
+import LoginForm from './components/LoginForm';
 import {Route, Routes, Navigate} from "react-router-dom"
 import PrivateRoute from './routes/PrivateRoute';
 import PublicRoute from './routes/PublicRoute';
