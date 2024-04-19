@@ -45,7 +45,7 @@ const Header = () => {
    const getData = async () => {
         try {
             setLoader(!loader);
-            const getResponse =  await axios.get('http://localhost:3000/api/blogs');
+            const getResponse =  await axios.get('https://travel-blog-server-steel.vercel.app/api/blogs');
             
             if(!getResponse) throw new Error(`Fetching Data failed, due to:`)
 

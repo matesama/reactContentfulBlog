@@ -23,7 +23,7 @@ const LoginForm = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({email: email, password: password })
             };
-            const getResponse =  await fetch('http://localhost:3000/api/login', requestData);
+            const getResponse =  await fetch('https://travel-blog-server-steel.vercel.app/api/login', requestData);
             const data = await getResponse.json();
             
             console.log(data);

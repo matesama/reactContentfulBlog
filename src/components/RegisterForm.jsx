@@ -8,15 +8,16 @@ const RegisterForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loader, setLoader] = useState(false)
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState("");
     
     const clearErrors = () => {
       setErrors({});
     }
 
     const getData = async (event) => {
-        event.preventDefault();
+        
         try {
+          event.preventDefault();
             setLoader(!loader)
     
               
@@ -36,11 +37,11 @@ const RegisterForm = () => {
               }
             
            
-            const getResponse =  await fetch('http://localhost:3000/api/register', requestData);
+            const getResponse =  await fetch('https://travel-blog-server-steel.vercel.app/api/register', requestData);
             const data = await getResponse.json();
             console.log(data);
-            setErrors(data);
-            
+            setErrors(data.error);
+            console.log(errors)
             
 
             if(!data) throw new Error(`Fetching Data failed, due to:${data.status}`)
@@ -82,7 +83,7 @@ const RegisterForm = () => {
                 <input type="button" id="loginButton" value="Login" onClick={()=> navigate('/login')} className="secondaryBtn" />
                 </div>
             </form> }
-            <div className='errorMessage'>{Object.keys(errors).length > 0 ? <p>{errors.error}</p> : null}</div>
+            <div className='errorMessage'>{Object.keys(errors).length > 0 ? <p>{errors}</p> : null}</div>
           
         </div>
     )
